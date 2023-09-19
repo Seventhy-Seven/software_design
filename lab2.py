@@ -11,3 +11,14 @@ def f(B, n, X):
     numerator = sum(1 / (B - i + 1) for i in range(1, n) if B > i - 1)
     denominator = (B + 1) * sum(X) - sum(i * X[i - 1] for i in range(1, n))
     return numerator - n * sum(X) / denominator
+
+def bisection_method(f, a, b, tol, n, X):
+    while (b - a) > tol:
+        midpoint = (a + b) / 2.0
+        if f(midpoint, n, X) == 0:
+            return midpoint
+        elif f(a, n, X) * f(midpoint, n, X) <= 0:
+            a = midpoint
+        else:
+            b = midpoint
+    return (a + b) / 2.0
