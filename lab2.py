@@ -22,3 +22,28 @@ def bisection_method(f, a, b, tol, n, X):
         else:
             b = midpoint
     return (a + b) / 2.0
+
+def calculate_K(B, n, X):
+    numerator = n
+    denominator = (B + 1) * sum(X) - sum(i * X[i - 1] for i in range(1, n))
+    K = numerator / denominator
+    return K
+
+def calculate_Xn1(n, B, K):
+    return 1 / (K * (B - n))
+
+def calculate_tk(n, B, K):
+    tk = 0
+    for i in range(1, int(B) - n):
+        tk += 1 / i
+    return (1 / K) * tk
+
+
+resultB = bisection_method(f, a, b, tolerance, n, X)
+print("Оценка максимального правдоподобия для B (метод бисекции):", round(resultB,4))
+K = calculate_K(resultB, n, X)
+print("Коэффициент пропорциональности K:", round(K,4))
+Xn1 = calculate_Xn1(n, resultB, K)
+print("Среднее время Xn+1:", round(Xn1,4))
+tk = calculate_tk(n, resultB, K)
+print("Время до окончания тестирования tk:", round(tk,4))
